@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ActorDex CRUD</title>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+    <!-- DEV VERSION <script src="https://unpkg.com/vue"></script> -->
+    <script src="js/vue.min.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+  </head>
+  <body>
+
+    <div id="vm">
+      <h1>Welcome to ActorDex</h1>
+      <button v-if="signedIn" v-on:click="signOut">Sign Out</button>
+
+      <div class="invis" v-bind:class="{hidden: signedIn, visible: displayContent}">
+        <p>You are currently signed out</p>
+        <div id="firebaseui-auth-container"></div>
+      </div>  
+
+      <div class="invis" v-bind:class="{hidden: !signedIn, visible: displayContent}">
+        <p>You are currently signed in</p>
+        <p>{{displayName}}</p>
+        <p>{{email}}</p>
+        <img v-bind:src="photoURL">
+        <favorite-list v-if="signedIn"></favorite-list>
+        <hr>
+        <actor-list></actor-list>
+        <hr>
+        <add-form v-bind:class="{hidden: submitAdd || showDelete || showEdit}"></add-form>
+        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:favorite="currFavorite"></actor-info>
+        <delete-actor v-if="showDelete"></delete-actor>
+        <edit-form v-if="showEdit"></edit-form>
+      </div>
+    </div>
+
+    <template id="favorite-list-temp">
+      <div>
+      	<h2>Your Favorite Actors</h2>
+      	<ul>
+      	  <li v-for="favorite in favorites">
+      	  	<a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
+      	  </li>
+      	</ul>
+      </div>
+    </template>
+
+    <template id="actor-list-temp">
+      <div>
+         <h2>Actor List</h2>
+         <ul>
+          <li v-for="actor in actors" v-bind:key="actor.name">
+            <a href="#" v-on:click="showActorInfo(actor.name)">{{actor.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </template>
+
+    <template id="add-form-temp">
+      <div>
+        <h2 id="add-form-title">Add Actor</h2>
+        <form id="add-actor-form" v-on:submit.prevent="addActor">
+          <label for="af-name"><span>Name</span></label><br><input type="text" v-model="newActorName" name="af-name" id="af-name"><br>
+          <label for="af-age"><span>Age</span></label><br><input type="text" v-model="newActorAge" name="af-age" id="af-age"><br>
+          <label for="af-bio"><span>Biography</span></label><br><textarea v-model="newActorBio" name="af-bio" id="af-bio"></textarea><br>
+          <span>Link to Image of Actor/Actress</span><br><input type="file" name="af-image" id="af-image"><br>
+          <span>Gender</span><br>
+            <label><input type="radio" v-model="newActorGender" name="af-gender" value="Male">Male</label><br>
+            <label><input type="radio" v-model="newActorGender" name="af-gender" value="Female">Female</label><br>
+          <span>Country of Origin</span><br>
+            <label><input type="radio" v-model="newActorCountry" name="af-country" value="US">United States</label><br>
+            <label><input type="radio" v-model="newActorCountry" name="af-country" value="UK">United Kingdom</label><br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </template>
+
+    <template id="actor-info-temp">
+      <div>
+        <h2 id="actor-name">{{name}}</h2>
+      	<p>{{gender[0]}} | {{age}} | {{country}}</p>
+      	<img id="actor-photo" :src="image" alt="Actor Headshot">
+    	<h3>Biography</h3>
+    	<p>{{bio}}</p>
+        <h3>Filmography</h3>
+        <a href="#">Transformers</a>
+        <a href="#">Maleficent</a>
+
+        <form v-on:submit.prevent="addFavorite" v-if="!favorite">
+          <button type="submit" id="favorite-button">Favorite</button>
+        </form>
+        <form v-on:submit.prevent="removeFavorite" v-if="favorite">
+          <button type="submit" id="unfavorite-button">Unfavorite</button>
+        </form>
+        <form v-on:submit.prevent="showEditForm">
+          <button type="submit" id="edit-button">Edit</button>
+        </form>
+        <form v-on:submit.prevent="showDeleteDialog">
+          <button type="submit" id="delete-button">Delete</button>
+        </form>
+        <form v-on:submit.prevent="back">
+          <button type="submit" id="back-button">Back</button>
+        </form>
+      </div>
+    </template>
+
+    <template id="delete-actor-temp">
+      <div>
+        <h3>Are you sure you want to delete?</h3>
+        <button type="button" v-on:click="deleteActor">Yes</button>
+        <button type="button" v-on:click="hideDeleteDialog">No</button>
+      </div>
+    </template> 
+
+    <template id="edit-form-temp">
+      <div>
+        <h2 id="edit-form-title">Edit Information</h2>
+        <form id="edit-actor-form" v-on:submit.prevent="editActor">
+          <label for="ef-name"><span>Name</span></label><br><input type="text" v-model="editName" name="ef-name" id="ef-name"><br>
+          <label for="ef-age"><span>Age</span></label><br><input type="text" v-model="editAge" name="ef-age" id="ef-age"><br>
+          <label for="ef-bio"><span>Biography</span></label><br><textarea form="edit-actor-form" v-model="editBio" name="ef-bio" id="ef-bio"></textarea><br>
+          <span>Link to Image of Actor/Actress</span><br><input type="file" name="ef-image" id="ef-image"><br>
+          <span>Gender</span><br>
+            <label><input type="checkbox" v-model="editGender" name="ef-gender" value="Male">Male</label><br>
+            <label><input type="checkbox" v-model="editGender" name="ef-gender" value="Female">Female</label><br>
+          <span>Country of Origin</span><br>
+            <label><input type="radio" v-model="editCountry" name="ef-country" value="US">United States</label><br>
+            <label><input type="radio" v-model="editCountry" name="ef-country" value="UK">United Kingdom</label><br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </template>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
