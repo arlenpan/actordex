@@ -1,10 +1,10 @@
 // Firebase configuration
 var config = {
-  apiKey: "AIzaSyDbFs8Xco-rBHBgovEIzMDy2s3bYGzuE_w",
-  authDomain: "actor-dex.firebaseapp.com",
-  databaseURL: "https://actor-dex.firebaseio.com",
-  storageBucket: "actor-dex.appspot.com",
-  messagingSenderId: "162028654830"
+  apiKey: "AIzaSyCCUaH1bW1oB7kgPUkIqRLI2-RCPyODvOo",
+  authDomain: "actor-dex-final.firebaseapp.com",
+  databaseURL: "https://actor-dex-final.firebaseio.com",
+  storageBucket: "actor-dex-final.appspot.com",
+  messagingSenderId: "810520072391"
 };
 
 // Initialize FirebaseUI
