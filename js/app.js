@@ -262,6 +262,11 @@ var deleteActor = Vue.component('delete-actor', {
   }
 });
 
+// Vue Component: ACTOR NOT FOUND
+// var actorNotFound = Vue.component('actor-not-found', {
+//   template: '#actor-not-found-temp'
+// });
+
 // Vue Instance: BODY WRAPPER & USER BASED FUNCTIONS
 var vm = new Vue({
   el: '#vm',
