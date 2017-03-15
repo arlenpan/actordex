@@ -6,7 +6,7 @@
     <meta name="author" content="Christy Wong, Arlen Pan, Kelsey Ma">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/bulma.css" />
     <link type="text/css" rel="stylesheet" href="css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
 
@@ -189,7 +189,7 @@
       <button type="button" v-on:click="hideDeleteDialog">No</button>
     </div>
   </template>  -->
-  <template type="text/x-template" id="delete-actor-temp">
+  <!-- <template type="text/x-template" id="delete-actor-temp">
     <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -205,6 +205,20 @@
         </div>
       </div>
     </transition>
+  </template> -->
+
+  <template type="text/x-template" id="delete-actor-temp">
+    <div class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <h3>Are you sure you want to delete?</h3>
+          <button class="button is-primary" v-on:click="deleteActor">Yes</button>
+          <button class="button is-danger" @click="$emit('close')">No</button>
+        </div>
+      </div>
+      <button class="modal-close" @click="$emit('close')"></button>
+    </div>
   </template>
 
   <template id="edit-form-temp">

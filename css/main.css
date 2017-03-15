@@ -23,7 +23,7 @@ img {
 }
 
 /* CSS for Modal */
-.modal-mask {
+/*.modal-mask {
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -58,10 +58,10 @@ img {
 .modal-body {
   margin: 10px 0;
   text-align: center;
-}
+}*/
 
 /* Shared Button CSS for Submit, Edit/Delete and Yes/No */
-.button-general {
+/*.button-general {
   margin: 0 auto;
   padding: 8px 15px 8px 15px;
   border: none;
@@ -73,13 +73,13 @@ img {
 }
 .red-button {
   background: #C9302C;
-}
+}*/
 
 /* Button CSS for the dialogs */
-.yes-no {
+/*.yes-no {
   display: inline-block;
 }
 .choice-button {
   color: white;
   font-size: 14px;
-}
+}*/
