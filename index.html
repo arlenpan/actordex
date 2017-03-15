@@ -147,22 +147,24 @@
       <div class="columns">
         <div id="main-info" class="column is-two-thirds">
           <h2 id="actor-name">{{name}}</h2>
-          <section class="info-blocks">
+          <div class="info-blocks">
             <p>{{gender[0]}} | {{age}} | {{country}}</p>
-          </section>
-          <section class="info-blocks">
+          </div>
+          <div class="info-blocks">
             <h3>Biography</h3>
             <p>{{bio}}</p>
-          </section>
-          <section class="info-blocks">
+          </div>
+          <div class="info-blocks">
             <h3>Filmography</h3>
             <div id="movies-list">
-              <input id="movie-input" v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie"><button v-on:click="addNewMovie">Enter</button><br>
+              <p class="control">
+                <input id="movie-input" class="input" v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie"><button v-on:click="addNewMovie" class="button">Enter</button><br>
+              </p>
               <!-- <ul style="list-style-type: none"> -->
                 <div is="new-movie-item" v-for="(movie, index) in movies" v-bind:key="movie" v-bind:title="movie" v-on:remove="removeMovie(index)"></div>
               <!-- </ul> -->
             </div>
-          </section>
+          </div>
           <form v-on:submit.prevent="addFavorite" v-if="!favorite">
             <button type="submit" id="favorite-button">Favorite</button>
           </form>
