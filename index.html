@@ -30,6 +30,7 @@
         <favorite-list v-if="signedIn"></favorite-list>
         <hr>
         <actor-list></actor-list>
+        <search-bar></search-bar>
         <hr>
         <add-form v-bind:class="{hidden: submitAdd || showDelete || showEdit}"></add-form>
         <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:favorite="currFavorite"></actor-info>
@@ -53,10 +54,25 @@
       <div>
          <h2>Actor List</h2>
          <ul>
-          <li v-for="actor in actors" v-bind:key="actor.name">
-            <a href="#" v-on:click="showActorInfo(actor.name)">{{actor.name}}</a>
+          <li v-for="actor in actors">
+            <a href="#" v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
           </li>
         </ul>
+      </div>
+    </template>
+
+    <template id="search-bar-temp">
+      <div>
+        <h2>Search for an Actor, Actress, or Movie</h2>
+        <form id="search-form" v-on:submit.prevent="viewActor">  
+          <input type="text" list="actor-dropdown" v-model="selection" class="search-input" name="search-actor-movie">
+          <datalist id="actor-dropdown">
+            <template v-for="actor in actors" v-bind:key="actor.name">
+               <option>{{actor.name}}</option>
+            </template>
+          </datalist>  
+          <input type="submit" value="Submit">
+        </form>
       </div>
     </template>
 
