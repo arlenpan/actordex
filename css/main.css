@@ -1,0 +1,19 @@
+.hidden {
+	display: none;
+}
+
+.invis {
+	opacity: 0;
+}
+
+.visible {
+	opacity: 1;
+}
+
+#nav-toggle-state {
+  display: none;
+}
+
+#nav-toggle-state:checked ~ .nav-menu {
+  display: block;
+}
