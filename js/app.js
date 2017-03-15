@@ -67,6 +67,22 @@ var actorList = Vue.component('actor-list', {
   }
 });
 
+// Vue Component: SEARCH BAR 
+var searchBar = Vue.component('search-bar', {
+  template: '#search-bar-temp',
+  data: function() {
+    return { selection: '' }
+  },
+  firebase: {
+    actors: database.ref('actors')
+  },
+  methods: {
+    viewActor: function() {
+      vm.showActorInfo(this.selection);
+    }
+  }
+});
+
 // Vue Component: ADD FORM
 var addForm = Vue.component('add-form', {
   template: '#add-form-temp',
@@ -143,7 +159,7 @@ var actorInfo = Vue.component('actor-info', {
   }
 });
 
-// VVue Component: EDIT ACTOR
+// Vue Component: EDIT ACTOR
 var editActor = Vue.component('edit-form', {
   template: '#edit-form-temp',
   data: function() {
@@ -163,23 +179,23 @@ var editActor = Vue.component('edit-form', {
       var newGender = this.editGender;
       var newCountry = this.editCountry;
       if(newName != '') {
-        database.ref('actors/' + vm.currActorName).update({name: newName});
+        database.ref('actors/' + vm.currKey).update({name: newName});
         vm.currActorName = newName;
       }
       if(newAge != '') {
-        database.ref('actors/' + vm.currActorName).update({age: newAge});
+        database.ref('actors/' + vm.currKey).update({age: newAge});
         vm.currActorAge = newAge;
       }
       if(newBio != '') {
-        database.ref('actors/' + vm.currActorName).update({bio: newBio});
+        database.ref('actors/' + vm.currKey).update({bio: newBio});
         vm.currActorBio = newBio;
       }
       if(newGender.length > 0) {
-        database.ref('actors/' + vm.currActorName).update({gender: newGender});
+        database.ref('actors/' + vm.currKey).update({gender: newGender});
         vm.currActorGender = newGender;
       }
       if(newCountry != '') {
-        database.ref('actors/' + vm.currActorName).update({country: newCountry});
+        database.ref('actors/' + vm.currKey).update({country: newCountry});
         vm.currActorCountry = newCountry;
       }
       var imageURL;
@@ -188,7 +204,7 @@ var editActor = Vue.component('edit-form', {
         var imageRef = storage.ref().child('images/' + selected[0].name).put(selected[0]);
         imageRef.on(firebase.storage.TaskEvent.STATE_CHANGED, null, null, function() {
           imageURL = imageRef.snapshot.downloadURL;
-          database.ref('actors/' + vm.currActorName).update({image: imageURL});
+          database.ref('actors/' + vm.currKey).update({image: imageURL});
           vm.currActorImage = imageURL;
           vm.currActorImagePath = selected[0].name;
         });
@@ -204,7 +220,7 @@ var deleteActor = Vue.component('delete-actor', {
   props: ['toggleDeleteDialog'],
   methods: {
     deleteActor: function() {
-      database.ref('actors/' + vm.currActorName).remove();
+      database.ref('actors/' + vm.currKey).remove();
       storage.ref().child('images/' + vm.currActorImagePath).delete();
       vm.submitAdd = false;
       vm.showDelete = false;
@@ -215,6 +231,7 @@ var deleteActor = Vue.component('delete-actor', {
       vm.currActorImagePath = '';
       vm.currActorGender = [];
       vm.currActorCountry = '';
+      vm.currKey = '';
     },
     hideDeleteDialog: function() {
       vm.showDelete = false;
@@ -244,7 +261,9 @@ var vm = new Vue({
     currActorImagePath: '',
     currActorGender: '',
     currActorCountry: '',
-    currFavorite: false
+    currFavorite: false,
+    currKey: '',
+    selectionValue: ''
   },
   methods: {
     signOut: function() {
@@ -260,6 +279,7 @@ var vm = new Vue({
         vm.currActorImage = snapshot.val().image;
         vm.currActorGender = snapshot.val().gender;
         vm.currActorCountry = snapshot.val().country;
+        vm.currKey = snapshot.key;
         var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
         ref.once('value').then(function(snapshot) {
           vm.currFavorite = snapshot.val();
