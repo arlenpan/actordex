@@ -11,7 +11,15 @@
 
 /*TEMPORARY*/
 img {
-	width: 100px;
+  width: 100%;
+}
+h2 {
+  font-size: 1.5em !important;
+  font-weight: bold !important;
+}
+h3 {
+  font-size: 1.17em !important;
+  font-weight: bold !important;
 }
 
 /* NAVBAR */
@@ -20,6 +28,28 @@ img {
 }
 #nav-toggle-state:checked ~ .nav-menu {
   display: block;
+}
+
+/* ACTOR INFO */
+.info-blocks {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#movie-input {
+  margin-bottom: 10px;
+}
+#movie-item {
+  margin-bottom: 5px; 
+  display: inline-block; 
+  padding-right: 5px;
+}
+#edit-button {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#delete-button {
+  width: 100%;
 }
 
 /* CSS for Modal */
