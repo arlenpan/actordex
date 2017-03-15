@@ -159,7 +159,7 @@ var actorInfo = Vue.component('actor-info', {
   }
 });
 
-// VVue Component: EDIT ACTOR
+// Vue Component: EDIT ACTOR
 var editActor = Vue.component('edit-form', {
   template: '#edit-form-temp',
   data: function() {
@@ -220,7 +220,7 @@ var deleteActor = Vue.component('delete-actor', {
   props: ['toggleDeleteDialog'],
   methods: {
     deleteActor: function() {
-      database.ref('actors/' + vm.currActorName).remove();
+      database.ref('actors/' + vm.currKey).remove();
       storage.ref().child('images/' + vm.currActorImagePath).delete();
       vm.submitAdd = false;
       vm.showDelete = false;
