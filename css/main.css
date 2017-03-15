@@ -1,19 +1,23 @@
+/* VUE JS CLASS CONTROLS */
 .hidden {
 	display: none;
 }
-
 .invis {
 	opacity: 0;
 }
-
 .visible {
 	opacity: 1;
 }
 
+/*TEMPORARY*/
+img {
+	width: 100px;
+}
+
+/* NAVBAR */
 #nav-toggle-state {
   display: none;
 }
-
 #nav-toggle-state:checked ~ .nav-menu {
   display: block;
 }

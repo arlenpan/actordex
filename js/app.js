@@ -263,7 +263,8 @@ var vm = new Vue({
     currActorCountry: '',
     currFavorite: false,
     currKey: '',
-    selectionValue: ''
+    selectionValue: '',
+    showLogin: false
   },
   methods: {
     signOut: function() {
