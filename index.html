@@ -22,7 +22,7 @@
 <body>
   <div id="vm">
     <!-- NAVBAR -->
-    <nav class="nav has-shadow">
+    <nav class="nav">
       <div class="nav-left">
         <h1 class="nav-item title is-3">AD</h1>
       </div>
@@ -34,6 +34,12 @@
       <input type="checkbox" id="nav-toggle-state" />
       <div class="nav-right nav-menu">
         <a class="nav-item" v-if="!signedIn" v-on:click="showLogin = true">Login</a>
+        <a class="nav-item" v-if="signedIn">        
+          <figure class="image is-16x16"  style="margin-right: 8px;" v-if="signedIn">
+            <img :src="photoURL">
+          </figure>
+          {{email}}
+        </a>
         <a class="nav-item" v-if="signedIn">Notifications</a>
         <a class="nav-item" v-if="signedIn">Favorites</a>
         <a class="nav-item" v-if="signedIn" v-on:click="signOut">Logout</a>
@@ -45,6 +51,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title is-1" v-if="!signedIn">Welcome to ActorDex</h1>
+          <h1 class="subtitle">Search for an Actor, Actress, or Movie</h1>
           <search-bar></search-bar>
         </div>
       </div>
@@ -59,6 +66,7 @@
       <button class="modal-close" v-on:click="showLogin = false"></button>
     </div>
 
+    <!-- ACTOR INFO/LIST -->
     <section class="section">
       <div class="container">
         <actor-list></actor-list>        
@@ -66,16 +74,12 @@
       </div>
     </section>
 
+    <!-- ???? -->
     <section class="section">
       <div class="container invis" v-bind:class="{hidden: !signedIn, visible: displayContent}">
-        <p>You are currently signed in</p>
-        <p>{{displayName}}</p>
-        <p>{{email}}</p>
-        <img v-bind:src="photoURL">
         <favorite-list v-if="signedIn"></favorite-list>
         <hr>
         <add-form v-bind:class="{hidden: submitAdd || showDelete || showEdit}"></add-form>
-        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:favorite="currFavorite"></actor-info>
         <delete-actor v-if="showDelete"></delete-actor>
         <edit-form v-if="showEdit"></edit-form>
       </div>
@@ -96,7 +100,7 @@
 
   <template id="actor-list-temp">
     <div>
-       <h2>Actor List</h2>
+       <h2>Actor List *TODO* ACTOR CARDS HERE?</h2>
        <ul>
         <li v-for="actor in actors">
           <a href="#" v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
@@ -107,15 +111,14 @@
 
   <template id="search-bar-temp">
     <div>
-      <h1>Search for an Actor, Actress, or Movie</h1>
-      <form id="search-form" v-on:submit.prevent="viewActor">  
-        <input type="text" list="actor-dropdown" v-model="selection" class="search-input" name="search-actor-movie">
+      <form class="control has-addons" id="search-form" v-on:submit.prevent="viewActor">  
+        <input class="input is-expanded" type="text" list="actor-dropdown" v-model="selection" class="search-input" name="search-actor-movie">
         <datalist id="actor-dropdown">
           <template v-for="actor in actors" v-bind:key="actor.name">
              <option>{{actor.name}}</option>
           </template>
         </datalist>  
-        <input type="submit" value="Submit">
+        <input class="button" type="submit" value="Submit">
       </form>
     </div>
   </template>
