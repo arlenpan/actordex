@@ -132,7 +132,7 @@ var addForm = Vue.component('add-form', {
 // Vue Component: ACTOR INFO
 var actorInfo = Vue.component('actor-info', {
   template: '#actor-info-temp',
-  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite'],
+  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies', 'newMovieName'],
   methods: {
     showEditForm: function() {
       vm.showEdit = true;
@@ -155,8 +155,25 @@ var actorInfo = Vue.component('actor-info', {
     },
     back: function() {
       vm.submitAdd = false;
+    },
+    addNewMovie: function() {
+      if(this.newMovieName != '') {
+        vm.currActorMovies.push(this.newMovieName);
+        this.newMovieName = '';
+        database.ref('actors/' + vm.currKey).update({movies: vm.currActorMovies});
+      }
+    },
+    removeMovie: function() {
+      vm.currActorMovies.splice(arguments[0], 1);
+      database.ref('actors/' + vm.currKey).update({movies: vm.currActorMovies});
     }
   }
+});
+
+// Vue Component: NEW MOVIE TO ADD
+var newMovieItem = Vue.component('new-movie-item', {
+  template: '#movie-item-temp',
+  props: ['title']
 });
 
 // Vue Component: EDIT ACTOR
@@ -231,6 +248,8 @@ var deleteActor = Vue.component('delete-actor', {
       vm.currActorImagePath = '';
       vm.currActorGender = [];
       vm.currActorCountry = '';
+      vm.currActorMovies = [];
+      vm.newMovieName = '';
       vm.currKey = '';
     },
     hideDeleteDialog: function() {
@@ -261,6 +280,8 @@ var vm = new Vue({
     currActorImagePath: '',
     currActorGender: '',
     currActorCountry: '',
+    currActorMovies: [],
+    newMovieName: '',
     currFavorite: false,
     currKey: '',
     selectionValue: '',
@@ -280,6 +301,11 @@ var vm = new Vue({
         vm.currActorImage = snapshot.val().image;
         vm.currActorGender = snapshot.val().gender;
         vm.currActorCountry = snapshot.val().country;
+        if(snapshot.val().movies == null) {
+          vm.currActorMovies = [];
+        } else {
+          vm.currActorMovies = snapshot.val().movies;
+        }
         vm.currKey = snapshot.key;
         var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
         ref.once('value').then(function(snapshot) {

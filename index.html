@@ -70,7 +70,7 @@
     <section class="section">
       <div class="container">
         <actor-list></actor-list>        
-        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:favorite="currFavorite"></actor-info>
+        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:newMovieName="newMovieName" v-bind:favorite="currFavorite"></actor-info>
       </div>
     </section>
 
@@ -80,7 +80,7 @@
         <favorite-list v-if="signedIn"></favorite-list>
         <hr>
         <add-form v-bind:class="{hidden: submitAdd || showDelete || showEdit}"></add-form>
-        <delete-actor v-if="showDelete"></delete-actor>
+        <!-- delete-actor v-if="showDelete"></delete-actor> -->
         <edit-form v-if="showEdit"></edit-form>
       </div>
     </section>
@@ -150,34 +150,62 @@
       <h3>Biography</h3>
       <p>{{bio}}</p>
       <h3>Filmography</h3>
-      <a href="#">Transformers</a>
-      <a href="#">Maleficent</a>
-
+      <!-- <a href="#">Transformers</a>
+      <a href="#">Maleficent</a> -->
+      <div id="movies-list">
+        <input v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie"><button v-on:click="addNewMovie">Enter</button>
+        <ul style="list-style-type: none">
+          <li is="new-movie-item" v-for="(movie, index) in movies" v-bind:key="movie" v-bind:title="movie" v-on:remove="removeMovie(index)"></li>
+        </ul>
+      </div>
       <form v-on:submit.prevent="addFavorite" v-if="!favorite">
         <button type="submit" id="favorite-button">Favorite</button>
-    </form>
-    <form v-on:submit.prevent="removeFavorite" v-if="favorite">
-        <button type="submit" id="unfavorite-button">Unfavorite</button>
-    </form>
-    <form v-on:submit.prevent="showEditForm">
-        <button type="submit" id="edit-button">Edit</button>
-    </form>
-    <form v-on:submit.prevent="showDeleteDialog">
-        <button type="submit" id="delete-button">Delete</button>
-    </form>
-    <form v-on:submit.prevent="back">
-        <button type="submit" id="back-button">Back</button>
-    </form>
-  </div>
+      </form>
+      <form v-on:submit.prevent="removeFavorite" v-if="favorite">
+          <button type="submit" id="unfavorite-button">Unfavorite</button>
+      </form>
+      <form v-on:submit.prevent="showEditForm">
+          <button type="submit" id="edit-button">Edit</button>
+      </form>
+      <!-- <form v-on:submit.prevent="showDeleteDialog">
+          <button type="submit" id="delete-button">Delete</button>
+      </form> -->
+      <button id="show-modal" @click="showDelete = true">Delete</button>
+      <delete-actor v-if="showDelete" @close="showDelete = false"></delete-actor>
+      <form v-on:submit.prevent="back">
+          <button type="submit" id="back-button">Back</button>
+      </form>
+    </div>
   </template>
 
-  <template id="delete-actor-temp">
+  <template id="movie-item-temp">
+    <li><input type="checkbox"> {{title}} <button v-on:click="$emit('remove')">X</button></li>
+  </template>
+
+  <!-- <template id="delete-actor-temp">
     <div>
       <h3>Are you sure you want to delete?</h3>
       <button type="button" v-on:click="deleteActor">Yes</button>
       <button type="button" v-on:click="hideDeleteDialog">No</button>
-  </div>
-  </template> 
+    </div>
+  </template>  -->
+  <template type="text/x-template" id="delete-actor-temp">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <div class="modal-header">
+                <h3>Are you sure you want to delete?</h3>
+            </div>
+            <div class="modal-body">
+              <button class="modal-default-button button-general blue-button choice-button" v-on:click="deleteActor">Yes</button>
+              <button class="modal-default-button button-general red-button choice-button" @click="$emit('close')">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </template>
 
   <template id="edit-form-temp">
     <div>
