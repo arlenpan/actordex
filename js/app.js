@@ -132,7 +132,12 @@ var addForm = Vue.component('add-form', {
 // Vue Component: ACTOR INFO
 var actorInfo = Vue.component('actor-info', {
   template: '#actor-info-temp',
-  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies', 'newMovieName'],
+  data: function () {
+    return {
+      newMovieName: ''
+    }
+  },
+  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies'],
   methods: {
     showEditForm: function() {
       vm.showEdit = true;
@@ -249,7 +254,6 @@ var deleteActor = Vue.component('delete-actor', {
       vm.currActorGender = [];
       vm.currActorCountry = '';
       vm.currActorMovies = [];
-      vm.newMovieName = '';
       vm.currKey = '';
     },
     hideDeleteDialog: function() {
@@ -281,7 +285,6 @@ var vm = new Vue({
     currActorGender: '',
     currActorCountry: '',
     currActorMovies: [],
-    newMovieName: '',
     currFavorite: false,
     currKey: '',
     selectionValue: '',
