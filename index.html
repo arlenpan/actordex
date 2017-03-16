@@ -113,7 +113,7 @@
           <div class="card column is-half-mobile" id="actor-list-cards">
             <div class="card-image">
               <figure class="image is-128x128">
-                <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image">
+                <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
               </figure>
             </div>
             <div class="card-content">
