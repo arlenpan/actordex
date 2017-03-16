@@ -223,6 +223,9 @@ var editActor = Vue.component('edit-form', {
     };
   },
   methods: {
+    cancel: function() {
+      vm.showEdit = false;
+    },
     editActor: function() {
       var newName = this.editName;
       var newAge = this.editAge;

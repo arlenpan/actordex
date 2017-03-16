@@ -40,7 +40,7 @@
           </figure>
           {{email}}
         </a>
-        <a class="nav-item" v-if="signedIn" >Notifications</a>
+        <a class="nav-item" v-if="signedIn">Notifications</a>
         <a class="nav-item" v-if="signedIn" v-on:click="showFavList">Favorites</a>
         <a class="nav-item" v-if="signedIn" v-on:click="signOut">Logout</a>
       </div>
@@ -51,7 +51,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title is-1" v-if="!signedIn">Welcome to ActorDex</h1>
-          <h1 class="subtitle">Search for an Actor, Actress, or Movie</h1>
+          <h1 class="subtitle">Search for an Actor or Actress</h1>
           <search-bar></search-bar>
         </div>
       </div>
@@ -101,7 +101,7 @@
 
   <template id="actor-list-temp">
     <div>
-       <h2>Actor List *TODO* ACTOR CARDS HERE?</h2>
+       <h2>Actor List</h2>
        <br>
        <!-- <ul>
         <li v-for="actor in actors">
@@ -266,20 +266,57 @@
 
   <template id="edit-form-temp">
     <div>
-      <h2 id="edit-form-title">Edit Information</h2>
-      <form id="edit-actor-form" v-on:submit.prevent="editActor">
-        <label for="ef-name"><span>Name</span></label><br><input type="text" v-model="editName" name="ef-name" id="ef-name"><br>
-        <label for="ef-age"><span>Age</span></label><br><input type="text" v-model="editAge" name="ef-age" id="ef-age"><br>
-        <label for="ef-bio"><span>Biography</span></label><br><textarea form="edit-actor-form" v-model="editBio" name="ef-bio" id="ef-bio"></textarea><br>
-        <span>Link to Image of Actor/Actress</span><br><input type="file" name="ef-image" id="ef-image"><br>
-        <span>Gender</span><br>
-        <label><input type="checkbox" v-model="editGender" name="ef-gender" value="Male">Male</label><br>
-        <label><input type="checkbox" v-model="editGender" name="ef-gender" value="Female">Female</label><br>
-        <span>Country of Origin</span><br>
-        <label><input type="radio" v-model="editCountry" name="ef-country" value="US">United States</label><br>
-        <label><input type="radio" v-model="editCountry" name="ef-country" value="UK">United Kingdom</label><br>
-        <input type="submit" value="Submit">
-      </form>
+      <div class="columns is-mobile">
+        <div class="column is-two-thirds is-offset-2">
+          <h2 id="edit-form-title">Edit Information</h2>
+          <form class="control" id="edit-actor-form" v-on:submit.prevent="editActor">
+            <div class="field">
+              <label class="label" for="ef-name">Name</label>
+              <p class="control"> 
+                <input class="input" type="text" v-model="editName" name="ef-name" id="ef-name">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="ef-age">Age</label>
+              <p class="control">
+                <input class="input" type="text" v-model="editAge" name="ef-age" id="ef-age">
+              </p>
+            </div>
+            <div class="field">
+              <label class="label" for="ef-bio">Biography</label>
+              <p class="control">         
+                <textarea class="textarea" form="edit-actor-form" v-model="editBio" name="ef-bio" id="ef-bio"></textarea>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <span class="label">Link to Image of Actor/Actress</span>
+                <input type="file" name="ef-image" id="ef-image"><br>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <span class="label">Gender</span>
+                <label class="radio"><input type="radio" v-model="editGender" name="ef-gender" value="Male"> Male</label>
+                <label class="radio"><input type="radio" v-model="editGender" name="ef-gender" value="Female"> Female</label>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <span class="label">Country of Origin</span>
+                <label class="radio"><input type="radio" v-model="editCountry" name="ef-country" value="US"> United States</label>
+                <label class="radio"><input type="radio" v-model="editCountry" name="ef-country" value="UK"> United Kingdom</label>
+              </p>
+            </div>
+            <div class="field is-grouped">
+              <p class="control">
+                <br><input class="button is-primary" type="submit" value="Submit">          
+                <button class="button is-link" v-on:click="cancel">Cancel</button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </template>
 
