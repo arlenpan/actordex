@@ -120,6 +120,9 @@ var addForm = Vue.component('add-form', {
     };
   },
   methods: {
+    cancel: function() {
+      vm.showAdd = false;
+    },
     addActor: function () {
       var actorName = this.newActorName;
       var actorAge = this.newActorAge;
