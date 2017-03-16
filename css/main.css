@@ -9,7 +9,7 @@
 	opacity: 1;
 }
 
-/* GENERAL CSS / Overriding Bulma CSS */
+/* GENERAL CSS */
 img {
   width: 100%;
 }
@@ -26,6 +26,12 @@ img {
 }
 #nav-toggle-state:checked ~ .nav-menu {
   display: block;
+}
+#acc-info {
+  cursor: default;
+}
+#acc-info:hover {
+  color: #7a7a7a;
 }
 
 /* ACTOR LIST CARDS */
@@ -53,7 +59,6 @@ img {
   display: inline-block; 
   padding-right: 5px;
 }
-
 #img-info button {
   width: 100%;
   margin-bottom: 5px;
