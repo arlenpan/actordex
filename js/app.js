@@ -57,6 +57,7 @@ var favoriteList = Vue.component('favorite-list', {
 // Vue Component: ACTOR LIST
 var actorList = Vue.component('actor-list', {
   template: '#actor-list-temp',
+  props: ['signedIn'],
   firebase: {
     actors: database.ref('actors')
   },
@@ -109,7 +110,7 @@ var searchFail = Vue.component('search-fail', {
   }
 });
 
-// Vue Component: SEARCH FAILED
+// Vue Component: SEARCH FAILED SIGNED IN
 var searchFailSignin = Vue.component('search-fail-signin', {
   template: '#fail-search-signin-temp',
   methods: {
@@ -355,6 +356,15 @@ var vm = new Vue({
       firebase.auth().signOut().then(function() {
         console.log("Signed out!");
       })
+    },
+    home: function() {
+      vm.submitAdd = false;
+      vm.showEdit = false;
+      vm.showFav = false;
+      vm.showAdd = false;
+      vm.showFail = false;
+      vm.showDelete = false;
+      vm.showDeleteMovie = false;      
     },
     showFavList: function() {
       vm.showFav = true;
