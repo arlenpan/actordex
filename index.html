@@ -61,7 +61,7 @@
       <div class="container" class="hidden" :class="{visible: displayContent}">
         <search-fail v-bind:class="{hidden: !showFail}" v-if="showFail && !signedIn"></search-fail>
         <search-fail-signin v-if="showFail && signedIn"></search-fail-signin>
-        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit || showFav || showAdd}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite"></actor-info>
+        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit || showFav || showAdd}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite" v-bind:signed-i  n="signedIn"></actor-info>
         <favorite-list v-bind:class="{hidden: !showFav}" v-if="signedIn"></favorite-list>
         <add-form v-bind:class="{hidden: !showAdd}"></add-form>
         <edit-form v-if="showEdit"></edit-form>
@@ -80,32 +80,9 @@
 
   </div>
 
-  <!-- TEMPLATES -->
-  <template id="favorite-list-temp">
-    <div class="box">
-     <h2>Your Favorite Actors</h2>
-     <ul>
-       <li v-for="favorite in favorites">
-          <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
-        </li>
-      </ul>
-    </div>
-  </template>
+  <!-- ======================= TEMPLATES ========================== -->
 
-  <template id="actor-list-temp">
-      <div id="actor-list" class="container">
-        <div v-for="actor in actors" class="card">
-          <div class="card-image">
-            <figure class="image is-128x128">
-              <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
-            </figure>
-          </div>
-          <div class="card-content">
-            <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
-          </div>
-        </div>
-      </div>
-  </template>
+  <!-- SEARCHBAR -->
 
   <template id="search-bar-temp">
     <div>
@@ -143,49 +120,44 @@
     </div>
   </template>
 
-  <template id="add-form-temp">
-    <div>
-      <div class="columns is-mobile">
-        <div class="column is-two-thirds is-offset-2">
-          <h1 class="title is-2 has-text-centered">Add Actor</h1>
-          <form class="control" id="add-actor-form" v-on:submit.prevent="addActor">
-            <div class="field">
-              <label class="label" for="af-name">Name</label>
-              <p class="control"> 
-                <input class="input" type="text" v-model="newActorName" name="af-name" id="af-name">
-              </p>
-              <label class="label" for="af-age">Age</label>
-              <p class="control">
-                <input class="input" type="text" v-model="newActorAge" name="af-age" id="af-age">
-              </p>
-              <label class="label" for="Af-bio">Biography</label>
-              <p class="control">   
-                <textarea class="textarea" v-model="newActorBio" name="af-bio" id="af-bio"></textarea>
-              </p>
-              <p class="control">
-                <span class="label">Link to Image of Actor/Actress</span>
-                <input type="file" name="af-image" id="af-image">
-              </p>
-              <p class="control">
-                <span class="label">Gender</span>
-                <label class="radio"><input type="radio" v-model="newActorGender" name="af-gender" value="Male"> Male</label>
-                <label class="radio"><input type="radio" v-model="newActorGender" name="af-gender" value="Female"> Female</label>
-              </p>
-              <p class="control">
-                <span class="label">Country of Origin</span>
-                <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="US"> United States</label>
-                <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="UK"> United Kingdom</label>
-              </p>
-              <p class="control">
-                <input class="button is-primary" type="submit" value="Submit">
-              </p>
-            </div>
-          </form>
-          <button class="button is-link has-text-left" v-on:click="cancel">Cancel</button>
-        </div>
-      </div>
+  <!-- LISTS -->
+
+  <template id="favorite-list-temp">
+    <div class="box">
+      <h1 class="title">Your Favorite Actors</h1>
+      <ul>
+        <li v-for="favorite in favorites">
+          <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
+        </li>
+      </ul>
     </div>
   </template>
+
+  <template id="actor-list-temp">
+      <div id="actor-list" class="container">
+        <div v-for="actor in actors" class="card">
+          <div class="card-image">
+            <figure class="image is-128x128">
+              <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
+            </figure>
+          </div>
+          <div class="card-content">
+            <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-128x128">
+              <img v-on:click="addForm" src="assets/profile-placeholder.png" alt="placeholder">
+            </figure>
+          </div>
+          <div class="card-content">
+            <a v-on:click="addForm">Add Actor</a>
+          </div>
+      </div>
+  </template>
+
+  <!-- ACTOR INFO -->
 
   <template id="actor-info-temp">
     <div class="box">
@@ -214,13 +186,13 @@
 
         <div id="img-info" class="column is-one-third">
           <img id="actor-photo" :src="image" alt="Actor Headshot">
-          <button class="button is-warning" v-on:click="addFavorite" v-if="!favorite">Favorite</button>
-          <button class="button is-warning" v-on:click="removeFavorite" v-if="favorite">Unfavorite</button>
+          <button class="button is-warning" v-on:click="addFavorite" v-if="!favorite && signedIn">Favorite</button>
+          <button class="button is-light" v-on:click="removeFavorite" v-if="favorite && signedIn">Unfavorite</button>
           <button class="button is-info" v-on:click="showEditForm">Edit</button>
           <button class="button is-danger" @click="showDelete = true" >Delete</button>
-          <delete-actor v-if="showDelete" @close="showDelete = false"></delete-actor>
         </div>
       </div>
+      <delete-actor v-if="showDelete" @close="showDelete = false"></delete-actor>
     </div>
   </template>
 
@@ -257,7 +229,7 @@
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
-          <h3>Are you sure you want to delete this actor?</h3><br>
+          <h3 class="title">Are you sure you want to delete this actor?</h3>
           <button class="button is-primary" v-on:click="deleteActor">Yes</button>
           <button class="button is-danger" @click="$emit('close')">No</button>
         </div>
@@ -266,8 +238,51 @@
     </div>
   </template>
 
+  <!-- TEMPLATES: FORMS -->
+
+  <template id="add-form-temp">
+    <div class="box">
+      <div class="columns is-mobile">
+        <div class="column is-two-thirds is-offset-2">
+          <h1 class="title is-2 has-text-centered">Add Actor</h1>
+          <form class="control" id="add-actor-form" v-on:submit.prevent="addActor">
+            <div class="field">
+              <label class="label" for="af-name">Name</label>
+              <p class="control"> 
+                <input class="input" type="text" v-model="newActorName" name="af-name" id="af-name">
+              </p>
+              <label class="label" for="af-age">Age</label>
+              <p class="control">
+                <input class="input" type="text" v-model="newActorAge" name="af-age" id="af-age">
+              </p>
+              <label class="label" for="Af-bio">Biography</label>
+              <p class="control">   
+                <textarea class="textarea" v-model="newActorBio" name="af-bio" id="af-bio"></textarea>
+              </p>
+              <p class="control">
+                <span class="label">Link to Image of Actor/Actress</span>
+                <input type="file" name="af-image" id="af-image">
+              </p>
+              <p class="control">
+                <span class="label">Gender</span>
+                <label class="radio"><input type="radio" v-model="newActorGender" name="af-gender" value="Male"> Male</label>
+                <label class="radio"><input type="radio" v-model="newActorGender" name="af-gender" value="Female"> Female</label>
+              </p>
+              <p class="control">
+                <span class="label">Country of Origin</span>
+                <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="US">United States</label>
+                <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="UK">United Kingdom</label>
+              </p>
+              <input class="button is-primary" type="submit" value="Submit">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </template>
+
   <template id="edit-form-temp">
-    <div>
+    <div class="box">
       <div class="columns is-mobile">
         <div class="column is-two-thirds is-offset-2">
           <h1 class="title is-2 has-text-centered">Edit Information</h1>
@@ -303,7 +318,7 @@
             <div class="field is-grouped">
               <p class="control">
                 <br><input class="button is-primary" type="submit" value="Submit">          
-                <button class="button is-link" v-on:click="cancel">Cancel</button>
+                <button class="button is-light" v-on:click="cancel">Cancel</button>
               </p>
             </div>
           </form>
