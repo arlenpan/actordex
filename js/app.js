@@ -78,7 +78,31 @@ var searchBar = Vue.component('search-bar', {
   },
   methods: {
     viewActor: function() {
-      vm.showActorInfo(this.selection);
+      var actorSel = this.selection;
+      database.ref('actors/' + actorSel).once('value').then(function(snapshot) {
+        var ifExists = snapshot.val();
+        if (ifExists){
+          vm.showActorInfo(actorSel);
+        } else {
+          vm.showFail = true;
+        }
+      });
+    }
+  }
+});
+
+// Vue Component: SEARCH FAILED
+var searchFail = Vue.component('search-fail', {
+  template: '#fail-search-temp'
+});
+
+// Vue Component: SEARCH FAILED
+var searchFailSignin = Vue.component('search-fail-signin', {
+  template: '#fail-search-signin-temp',
+  methods: {
+    addForm: function() {
+      vm.showAdd = true;
+      vm.showFail = false;
     }
   }
 });
@@ -293,13 +317,20 @@ var vm = new Vue({
     currFavorite: false,
     currKey: '',
     selectionValue: '',
-    showLogin: false
+    showLogin: false,
+    showFav: false,
+    showAdd: false,
+    showFail: false
   },
   methods: {
     signOut: function() {
       firebase.auth().signOut().then(function() {
         console.log("Signed out!");
       })
+    },
+    showFavList: function() {
+      vm.showFav = true;
+      vm.showAdd = false;
     },
     showActorInfo: function(actor) {
       database.ref('actors/' + actor).once('value').then(function(snapshot) {
@@ -322,6 +353,9 @@ var vm = new Vue({
       });
       vm.submitAdd = true;
       vm.showEdit = false;
+      vm.showFav = false;
+      vm.showAdd = false;
+      vm.showFail = false;
     }
   }
 });

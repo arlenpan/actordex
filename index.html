@@ -40,8 +40,8 @@
           </figure>
           {{email}}
         </a>
-        <a class="nav-item" v-if="signedIn">Notifications</a>
-        <a class="nav-item" v-if="signedIn">Favorites</a>
+        <a class="nav-item" v-if="signedIn" >Notifications</a>
+        <a class="nav-item" v-if="signedIn" v-on:click="showFavList">Favorites</a>
         <a class="nav-item" v-if="signedIn" v-on:click="signOut">Logout</a>
       </div>
     </nav>
@@ -69,17 +69,18 @@
     <!-- ACTOR INFO/LIST -->
     <section class="section">
       <div class="container">
+        <search-fail v-bind:class="{hidden: !showFail}" v-if="!signedIn"></search-fail>
         <actor-list></actor-list>        
-        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite"></actor-info>
+        <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit || showFav || showAdd}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite"></actor-info>
       </div>
     </section>
 
     <!-- ???? -->
     <section class="section">
       <div class="container invis" v-bind:class="{hidden: !signedIn, visible: displayContent}">
-        <favorite-list v-if="signedIn"></favorite-list>
-        <hr>
-        <add-form v-bind:class="{hidden: submitAdd || showDelete || showEdit}"></add-form>
+        <search-fail-signin v-bind:class="{hidden: !showFail}"></search-fail-signin>
+        <favorite-list v-bind:class="{hidden: !showFav}" v-if="signedIn"></favorite-list>
+        <add-form v-bind:class="{hidden: !showAdd}"></add-form>
         <!-- delete-actor v-if="showDelete"></delete-actor> -->
         <edit-form v-if="showEdit"></edit-form>
       </div>
@@ -103,7 +104,7 @@
        <h2>Actor List *TODO* ACTOR CARDS HERE?</h2>
        <ul>
         <li v-for="actor in actors">
-          <a href="#" v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
+          <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
         </li>
       </ul>
     </div>
@@ -114,12 +115,24 @@
       <form class="control has-addons" id="search-form" v-on:submit.prevent="viewActor">  
         <input class="input is-expanded" type="text" list="actor-dropdown" v-model="selection" class="search-input" name="search-actor-movie">
         <datalist id="actor-dropdown">
-          <template v-for="actor in actors" v-bind:key="actor.name">
+          <template v-for="actor in actors">
              <option>{{actor.name}}</option>
           </template>
         </datalist>  
         <input class="button" type="submit" value="Submit">
       </form>
+    </div>
+  </template>
+
+  <template id="fail-search-temp">
+    <div>
+      <h2 id="fail-search-title">This actor does not currently exist in the database. Log in to add the actor.</h2>
+    </div>
+  </template>
+
+  <template id="fail-search-signin-temp">
+    <div>
+      <h2 id="fail-search-title-signedin">This actor does not currently exist in the database. <a v-on:click="addForm">Click here</a> to add the actor.</h2>
     </div>
   </template>
 
@@ -132,11 +145,11 @@
         <label for="af-bio"><span>Biography</span></label><br><textarea v-model="newActorBio" name="af-bio" id="af-bio"></textarea><br>
         <span>Link to Image of Actor/Actress</span><br><input type="file" name="af-image" id="af-image"><br>
         <span>Gender</span><br>
-        <label><input type="radio" v-model="newActorGender" name="af-gender" value="Male">Male</label><br>
-        <label><input type="radio" v-model="newActorGender" name="af-gender" value="Female">Female</label><br>
+        <label><input type="radio" v-model="newActorGender" name="af-gender" value="Male"> Male</label><br>
+        <label><input type="radio" v-model="newActorGender" name="af-gender" value="Female"> Female</label><br>
         <span>Country of Origin</span><br>
-        <label><input type="radio" v-model="newActorCountry" name="af-country" value="US">United States</label><br>
-        <label><input type="radio" v-model="newActorCountry" name="af-country" value="UK">United Kingdom</label><br>
+        <label><input type="radio" v-model="newActorCountry" name="af-country" value="US"> United States</label><br>
+        <label><input type="radio" v-model="newActorCountry" name="af-country" value="UK"> United Kingdom</label><br>
         <input type="submit" value="Submit">
     </form>
   </div>
