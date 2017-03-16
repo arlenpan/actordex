@@ -40,7 +40,6 @@
           </figure>
           {{email}}
         </a>
-        <a class="nav-item" v-if="signedIn">Notifications</a>
         <a class="nav-item" v-if="signedIn" v-on:click="showFavList">Favorites</a>
         <a class="nav-item" v-if="signedIn" v-on:click="signOut">Logout</a>
       </div>
@@ -59,14 +58,14 @@
 
     <!-- SECONDARY SECTION -->
     <section class="section">
-      <div class="container">
+      <div class="container" class="hidden" :class="{visible: displayContent}">
         <search-fail v-bind:class="{hidden: !showFail}" v-if="showFail && !signedIn"></search-fail>
         <search-fail-signin v-if="showFail && signedIn"></search-fail-signin>
-        <actor-list></actor-list>
         <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit || showFav || showAdd}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite"></actor-info>
         <favorite-list v-bind:class="{hidden: !showFav}" v-if="signedIn"></favorite-list>
         <add-form v-bind:class="{hidden: !showAdd}"></add-form>
         <edit-form v-if="showEdit"></edit-form>
+        <actor-list></actor-list>
       </div>
     </section>
 
@@ -83,30 +82,26 @@
 
   <!-- TEMPLATES -->
   <template id="favorite-list-temp">
-    <div>
-       <h2>Your Favorite Actors</h2>
-       <ul>
-         <li v-for="favorite in favorites">
-            <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
+    <div class="box">
+     <h2>Your Favorite Actors</h2>
+     <ul>
+       <li v-for="favorite in favorites">
+          <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
         </li>
-    </ul>
-  </div>
+      </ul>
+    </div>
   </template>
 
   <template id="actor-list-temp">
-      <div class="columns">
-        <div v-for="actor in actors">
-          <div class="card column is-half-mobile" id="actor-list-cards">
-            <div class="card-image">
-              <figure class="image is-128x128">
-                <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
-              </div>
-            </div>
+      <div id="actor-list" class="container">
+        <div v-for="actor in actors" class="card">
+          <div class="card-image">
+            <figure class="image is-128x128">
+              <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
+            </figure>
+          </div>
+          <div class="card-content">
+            <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
           </div>
         </div>
       </div>
@@ -128,24 +123,22 @@
 
   <template id="fail-search-temp">
     <div class="modal is-active">
-      <div class="modal-card">
-        <div class="notification">
-          <button class="delete" v-on:click="toggleShowFail"></button>
-          <h1 class="title" id="fail-search-title">This actor does not currently exist in the database. Log in to add the actor.</h1>
-          <button class="button is-primary" v-on:click="toggleShowLogin">Login</button>
-        </div>
+      <div class="modal-background"></div>
+      <div class="notification">
+        <button class="delete" v-on:click="toggleShowFail"></button>
+        <h1 class="title" id="fail-search-title">This actor does not currently exist in the database. Log in to add the actor.</h1>
+        <button class="button is-primary" v-on:click="toggleShowLogin">Login</button>
       </div>
     </div>
   </template>
 
   <template id="fail-search-signin-temp">
     <div class="modal is-active">
-      <div class="modal-content">
-        <div class="notification">
-          <button class="delete" v-on:click="toggleShowFail"></button>
-          <h1 class="title" id="fail-search-title-signedin">This actor does not currently exist in the database.</h1>
-          <button class="button is-primary" v-on:click="addForm">Click here to add the actor.</button>
-        </div>
+      <div class="modal-background"></div>
+      <div class="notification">
+        <button class="delete" v-on:click="toggleShowFail"></button>
+        <h1 class="title" id="fail-search-title-signedin">This actor does not currently exist in the database.</h1>
+        <button class="button is-primary" v-on:click="addForm">Click here to add the actor.</button>
       </div>
     </div>
   </template>
@@ -208,13 +201,11 @@
           <p>{{bio}}</p>
           <hr>
           <h3 class="title is-4">Filmography</h3>
-            <!-- <ul style="list-style-type: none"> -->
-            <div is="new-movie-item" v-for="(movie, index) in movies" v-bind:key="movie" v-bind:title="movie" v-on:remove="removeMovie(index)"></div>
-            <p class="control has-addons">
-              <input class="input is-expanded" v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie">
-              <button v-on:click="addNewMovie" class="button">Enter</button>
-            </p>
-            <!-- </ul> -->
+          <div is="new-movie-item" v-for="(movie, index) in movies" v-bind:key="movie" v-bind:title="movie" v-on:remove="removeMovie(index)"></div>
+          <p class="control has-addons">
+            <input class="input is-expanded" v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie">
+            <button v-on:click="addNewMovie" class="button">Enter</button>
+          </p>
           <form v-on:submit.prevent="addFavorite" v-if="!favorite">
           </form>
           <form v-on:submit.prevent="removeFavorite" v-if="favorite">

@@ -13,6 +13,9 @@
 img {
   width: 100%;
 }
+.notification {
+	text-align: center;
+}
 
 /* NAVBAR */
 #nav-toggle-state {
@@ -23,16 +26,21 @@ img {
 }
 
 /* ACTOR LIST CARDS */
-#actor-list-cards {
+#actor-list {
+	display: flex;
+	flex-wrap: wrap;
+}
+#actor-list .card {
   text-align: center;
   margin-left: 10px;
   margin-bottom: 10px;
+  max-width: 128px;
 }
-#actor-list-cards .card-content {
-  padding: 0;
+#actor-list .card-content {
+  padding: 5px;
   margin-top: 5px;
 }
-#actor-list-cards img {
+#actor-list img {
   cursor: pointer;
 }
 
