@@ -34,7 +34,7 @@
       <input type="checkbox" id="nav-toggle-state" />
       <div class="nav-right nav-menu">
         <a class="nav-item" v-if="!signedIn" v-on:click="showLogin = true">Login</a>
-        <a class="nav-item" v-if="signedIn">        
+        <a class="nav-item" v-if="signedIn" id="acc-info">        
           <figure class="image is-16x16"  style="margin-right: 8px;" v-if="signedIn">
             <img :src="photoURL">
           </figure>
