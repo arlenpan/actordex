@@ -1,10 +1,13 @@
-// cahce info
+// cache info
 var CACHE = 'actordex-cache';
 var urlsToCache = [
   '/',
-  'styles/*',
-  'js/*',
-  'assets/*'
+  'css/main.css',
+  'css/bulma.css',
+  'js/app.js',
+  'js/config.js',
+  'js/vue.min.js',
+  'assets/profile-placeholder.png'
 ]
 
 // on install
