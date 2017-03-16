@@ -20,6 +20,7 @@ h2 {
 h3 {
   font-size: 1.17em !important;
   font-weight: bold !important;
+  color: #4a4a4a;
 }
 
 /* NAVBAR */
@@ -37,7 +38,7 @@ h3 {
 }
 #movie-input {
   margin-right: 5px;
-  width: 75%;
+  width: 85%;
 }
 #movie-item {
   margin-bottom: 5px; 

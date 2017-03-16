@@ -161,7 +161,7 @@ var actorInfo = Vue.component('actor-info', {
       newMovieName: ''
     }
   },
-  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies'],
+  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies', 'showDeleteMovie'],
   methods: {
     showEditForm: function() {
       vm.showEdit = true;
@@ -202,7 +202,12 @@ var actorInfo = Vue.component('actor-info', {
 // Vue Component: NEW MOVIE TO ADD
 var newMovieItem = Vue.component('new-movie-item', {
   template: '#movie-item-temp',
-  props: ['title']
+  props: ['title', 'showDeleteMovie']
+});
+
+// Vue Component: DELETE MOVIE
+var deleteMovie = Vue.component('delete-movie', {
+  template: '#delete-movie-temp'
 });
 
 // Vue Component: EDIT ACTOR
@@ -299,6 +304,7 @@ var vm = new Vue({
     signedIn: false,
     submitAdd: false,
     showDelete: false,
+    showDeleteMovie: false,
     showEdit: false,
     displayName: null,
     email: null,

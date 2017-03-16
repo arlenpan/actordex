@@ -210,7 +210,9 @@
       <div class="block" id="movie-item">
         <span class="tag is-primary is-medium">
           {{title}}
-          <button class="delete is-small" v-on:click="$emit('remove')"></button>
+          <!-- <button class="delete is-small" v-on:click="$emit('remove')"></button> -->
+          <button class="delete is-small" @click="showDeleteMovie = true"></button>
+          <delete-movie v-if="showDeleteMovie" v-on:remove="$emit('remove')" @close="showDeleteMovie = false"></delete-movie>
         </span>
       </div>
     <!-- </li> -->
@@ -241,12 +243,26 @@
     </transition>
   </template> -->
 
-  <template type="text/x-template" id="delete-actor-temp">
+  <template id="delete-movie-temp">
     <div class="modal is-active">
       <div class="modal-background"></div>
       <div class="modal-content">
         <div class="box">
-          <h3>Are you sure you want to delete?</h3>
+          <h3>Are you sure you want to delete this movie?</h3><br>
+          <button class="button is-primary" @click="$emit('remove')">Yes</button>
+          <button class="button is-danger" @click="$emit('close')">No</button>
+        </div>
+      </div>
+      <button class="modal-close" @click="$emit('close')"></button>
+    </div>
+  </template>
+
+  <template id="delete-actor-temp">
+    <div class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          <h3>Are you sure you want to delete this actor?</h3><br>
           <button class="button is-primary" v-on:click="deleteActor">Yes</button>
           <button class="button is-danger" @click="$emit('close')">No</button>
         </div>
