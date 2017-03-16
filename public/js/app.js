@@ -388,12 +388,10 @@ var vm = new Vue({
           vm.currActorMovies = snapshot.val().movies;
         }
         vm.currKey = snapshot.key;
-        if (this.signedIn) {
-          var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
-          ref.once('value').then(function(snapshot) {
-            vm.currFavorite = snapshot.val();
-          })
-        }
+        var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
+        ref.once('value').then(function(snapshot) {
+          vm.currFavorite = snapshot.val();
+        })
       });
       vm.submitAdd = true;
       vm.showEdit = false;
