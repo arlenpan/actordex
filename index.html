@@ -262,10 +262,12 @@
                 <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="US">United States</label>
                 <label class="radio"><input type="radio" v-model="newActorCountry" name="af-country" value="UK">United Kingdom</label>
               </p>
-              <input class="button is-primary" type="submit" value="Submit">
+              <p class="control">
+                <input class="button is-primary" type="submit" value="Submit" />
+                <button class="button is-light" v-on:click.prevent="cancel">Cancel</button>
+              </p>
             </div>
           </form>
-          <button class="button is-light" v-on:click="cancel">Cancel</button>
         </div>
       </div>
     </div>
