@@ -50,8 +50,9 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title is-1" v-if="!signedIn">Welcome to ActorDex</h1>
-          <h1 class="subtitle">Search for an Actor or Actress</h1>
+          <h1 class="subtitle is-4">Search for an Actor or Actress</h1>
           <search-bar></search-bar>
+          <a class="subtitle" v-on:click="viewAL">View all</a>
         </div>
       </div>
     </section>
@@ -64,7 +65,7 @@
         <favorite-list v-bind:class="{hidden: !showFav || showAdd}" v-if="signedIn"></favorite-list>
         <add-form v-bind:class="{hidden: !showAdd}"></add-form>
         <edit-form v-if="showEdit"></edit-form>
-        <actor-list v-bind:signed-in="signedIn"></actor-list>
+        <actor-list v-if="showAL" v-bind:signed-in="signedIn"></actor-list>
       </div>
     </section>
 

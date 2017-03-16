@@ -65,6 +65,7 @@ var actorList = Vue.component('actor-list', {
     addForm: function() {
       vm.showAdd = true;
       vm.showFail = false;
+      vm.showAL = false;
     },
     showActorInfo: function(actor) {
       vm.showActorInfo(actor);
@@ -340,13 +341,19 @@ var vm = new Vue({
     showLogin: false,
     showFav: false,
     showAdd: false,
-    showFail: false
+    showFail: false,
+    showAL: false
   },
   methods: {
     signOut: function() {
       firebase.auth().signOut().then(function() {
         console.log("Signed out!");
       })
+    },
+    viewAL: function() {
+      vm.showAL = true;
+      vm.showFav = false;
+      vm.submitAdd = false;
     },
     home: function() {
       vm.submitAdd = false;
@@ -355,11 +362,13 @@ var vm = new Vue({
       vm.showAdd = false;
       vm.showFail = false;
       vm.showDelete = false;
-      vm.showDeleteMovie = false;      
+      vm.showDeleteMovie = false; 
+      vm.showAL = false;     
     },
     showFavList: function() {
       vm.showFav = true;
       vm.showAdd = false;
+      vm.showAL = false;
     },
     showActorInfo: function(actor) {
       database.ref('actors/' + actor).once('value').then(function(snapshot) {
@@ -387,6 +396,7 @@ var vm = new Vue({
       vm.showFav = false;
       vm.showAdd = false;
       vm.showFail = false;
+      vm.showAL = false;
     }
   }
 });
