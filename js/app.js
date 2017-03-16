@@ -93,7 +93,16 @@ var searchBar = Vue.component('search-bar', {
 
 // Vue Component: SEARCH FAILED
 var searchFail = Vue.component('search-fail', {
-  template: '#fail-search-temp'
+  template: '#fail-search-temp',
+  methods: {
+    toggleShowFail: function() {
+      vm.showFail = false;
+    },
+    toggleShowLogin: function() {
+      vm.showLogin = true;
+      vm.showFail = false;
+    }
+  }
 });
 
 // Vue Component: SEARCH FAILED
@@ -102,6 +111,9 @@ var searchFailSignin = Vue.component('search-fail-signin', {
   methods: {
     addForm: function() {
       vm.showAdd = true;
+      vm.showFail = false;
+    },
+    toggleShowFail: function() {
       vm.showFail = false;
     }
   }
@@ -161,7 +173,7 @@ var actorInfo = Vue.component('actor-info', {
       newMovieName: ''
     }
   },
-  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies', 'showDeleteMovie'],
+  props: ['name', 'age', 'bio', 'image', 'gender', 'country', 'showDelete', 'favorite', 'movies', 'showDeleteMovie', 'signedIn'],
   methods: {
     showEditForm: function() {
       vm.showEdit = true;
