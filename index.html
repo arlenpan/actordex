@@ -59,8 +59,7 @@
     <!-- SECONDARY SECTION -->
     <section class="section">
       <div class="container" class="hidden" :class="{visible: displayContent}">
-        <search-fail v-bind:class="{hidden: !showFail}" v-if="showFail && !signedIn"></search-fail>
-        <search-fail-signin v-if="showFail && signedIn"></search-fail-signin>
+        <search-fail v-bind:signed-in="signedIn" v-if="showFail"></search-fail>     
         <actor-info v-bind:class="{hidden: !submitAdd || showDelete || showEdit || showFav || showAdd}" v-bind:name="currActorName" v-bind:age="currActorAge" v-bind:bio="currActorBio" v-bind:image="currActorImage" v-bind:gender="currActorGender" v-bind:country="currActorCountry" v-bind:movies="currActorMovies" v-bind:favorite="currFavorite" v-bind:signed-in="signedIn"></actor-info>
         <favorite-list v-bind:class="{hidden: !showFav || showAdd}" v-if="signedIn"></favorite-list>
         <add-form v-bind:class="{hidden: !showAdd}"></add-form>
@@ -103,19 +102,9 @@
       <div class="modal-background"></div>
       <div class="notification">
         <button class="delete" v-on:click="toggleShowFail"></button>
-        <h1 class="title" id="fail-search-title">This actor does not currently exist in the database. Log in to add the actor.</h1>
-        <button class="button is-primary" v-on:click="toggleShowLogin">Login</button>
-      </div>
-    </div>
-  </template>
-
-  <template id="fail-search-signin-temp">
-    <div class="modal is-active">
-      <div class="modal-background"></div>
-      <div class="notification">
-        <button class="delete" v-on:click="toggleShowFail"></button>
-        <h1 class="title" id="fail-search-title-signedin">This actor does not currently exist in the database.</h1>
-        <button class="button is-primary" v-on:click="addForm">Click here to add the actor.</button>
+        <h1 class="title" id="fail-search-title">This actor does not currently exist in the database.</h1>
+        <button v-if="!signedIn" class="button is-primary is-medium" v-on:click="toggleShowLogin">Log in to add the actor.</button>
+        <button v-if="signedIn" class="button is-primary is-medium" v-on:click="addForm">Click here to add the actor.</button>
       </div>
     </div>
   </template>

@@ -99,6 +99,7 @@ var searchBar = Vue.component('search-bar', {
 // Vue Component: SEARCH FAILED
 var searchFail = Vue.component('search-fail', {
   template: '#fail-search-temp',
+  props: ['signedIn'],
   methods: {
     toggleShowFail: function() {
       vm.showFail = false;
@@ -106,19 +107,9 @@ var searchFail = Vue.component('search-fail', {
     toggleShowLogin: function() {
       vm.showLogin = true;
       vm.showFail = false;
-    }
-  }
-});
-
-// Vue Component: SEARCH FAILED SIGNED IN
-var searchFailSignin = Vue.component('search-fail-signin', {
-  template: '#fail-search-signin-temp',
-  methods: {
+    },
     addForm: function() {
       vm.showAdd = true;
-      vm.showFail = false;
-    },
-    toggleShowFail: function() {
       vm.showFail = false;
     }
   }
