@@ -102,11 +102,29 @@
   <template id="actor-list-temp">
     <div>
        <h2>Actor List *TODO* ACTOR CARDS HERE?</h2>
-       <ul>
+       <br>
+       <!-- <ul>
         <li v-for="actor in actors">
           <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
         </li>
-      </ul>
+      </ul> -->
+      <div class="columns">
+        <div v-for="actor in actors">
+          <div class="card column is-half-mobile" id="actor-list-cards">
+            <div class="card-image">
+              <figure class="image is-128x128">
+                <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
     </div>
   </template>
 
@@ -217,31 +235,6 @@
       </div>
     <!-- </li> -->
   </template>
-
-  <!-- <template id="delete-actor-temp">
-    <div>
-      <h3>Are you sure you want to delete?</h3>
-      <button type="button" v-on:click="deleteActor">Yes</button>
-      <button type="button" v-on:click="hideDeleteDialog">No</button>
-    </div>
-  </template>  -->
-  <!-- <template type="text/x-template" id="delete-actor-temp">
-    <transition name="modal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-header">
-                <h3>Are you sure you want to delete?</h3>
-            </div>
-            <div class="modal-body">
-              <button class="modal-default-button button-general blue-button choice-button" v-on:click="deleteActor">Yes</button>
-              <button class="modal-default-button button-general red-button choice-button" @click="$emit('close')">No</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </template> -->
 
   <template id="delete-movie-temp">
     <div class="modal is-active">
