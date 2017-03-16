@@ -123,27 +123,27 @@
   </template>
 
   <template id="actor-list-temp">
-      <div id="actor-list" class="container">
-        <div v-for="actor in actors" class="card">
-          <div class="card-image">
-            <figure class="image is-128x128">
-              <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
-            </figure>
-          </div>
-          <div class="card-content">
-            <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
-          </div>
+    <div id="actor-list" class="container">
+      <div v-for="actor in actors" class="card">
+        <div class="card-image">
+          <figure class="image is-128x128">
+            <img v-on:click="showActorInfo(actor['.key'])" :src="actor.image" :alt="actor.name">
+          </figure>
         </div>
-        <div class="card" v-if="signedIn">
-          <div class="card-image">
-            <figure class="image is-128x128">
-              <img v-on:click="addForm" src="assets/profile-placeholder.png" alt="placeholder">
-            </figure>
-          </div>
-          <div class="card-content">
-            <a v-on:click="addForm">Add Actor</a>
-          </div>
+        <div class="card-content">
+          <a v-on:click="showActorInfo(actor['.key'])">{{actor.name}}</a>
+        </div>
       </div>
+      <div class="card" v-if="signedIn">
+        <div class="card-image">
+          <figure class="image is-128x128">
+            <img v-on:click="addForm" src="assets/profile-placeholder.png" alt="placeholder">
+          </figure>
+        </div>
+        <div class="card-content">
+          <a v-on:click="addForm">Add Actor</a>
+        </div>
+    </div>
   </template>
 
   <!-- ACTOR INFO -->
@@ -163,7 +163,7 @@
           <hr>
           <h3 class="title is-4">Filmography</h3>
           <div is="new-movie-item" v-for="(movie, index) in movies" v-bind:key="movie" v-bind:title="movie" v-on:remove="removeMovie(index)"></div>
-          <p class="control has-addons">
+          <p class="control has-addons" v-if="signedIn">
             <input class="input is-expanded" v-model="newMovieName" v-on:keyup.enter="addNewMovie" placeholder="Add a New Movie">
             <button v-on:click="addNewMovie" class="button">Enter</button>
           </p>
@@ -192,7 +192,7 @@
         <span class="tag is-primary is-medium">
           {{title}}
           <!-- <button class="delete is-small" v-on:click="$emit('remove')"></button> -->
-          <button class="delete is-small" @click="showDeleteMovie = true"></button>
+          <button class="delete is-small" @click="showDeleteMovie = true" v-if="signedIn"></button>
           <delete-movie v-if="showDeleteMovie" v-on:remove="$emit('remove')" @close="showDeleteMovie = false"></delete-movie>
         </span>
       </div>
@@ -227,7 +227,7 @@
     </div>
   </template>
 
-  <!-- TEMPLATES: FORMS -->
+  <!-- FORMS -->
 
   <template id="add-form-temp">
     <div class="box">
