@@ -213,7 +213,7 @@ var actorInfo = Vue.component('actor-info', {
 // Vue Component: NEW MOVIE TO ADD
 var newMovieItem = Vue.component('new-movie-item', {
   template: '#movie-item-temp',
-  props: ['title', 'showDeleteMovie']
+  props: ['title', 'showDeleteMovie', 'signedIn']
 });
 
 // Vue Component: DELETE MOVIE
