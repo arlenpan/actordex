@@ -18,6 +18,7 @@ window.addEventListener('load', function() {
       vm.uid = user.uid;
       vm.providerData = user.providerData;
       writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+      vm.showAL = true;
     } else {
       vm.signedIn = false;
       vm.accountDetails = "";
@@ -196,6 +197,7 @@ var actorInfo = Vue.component('actor-info', {
     },
     back: function() {
       vm.submitAdd = false;
+      vm.showAL = true;
     },
     addNewMovie: function() {
       if(this.newMovieName != '') {
@@ -348,7 +350,9 @@ var vm = new Vue({
     signOut: function() {
       firebase.auth().signOut().then(function() {
         console.log("Signed out!");
-      })
+      });
+      this.home(); 
+      vm.showAL = false; 
     },
     viewAL: function() {
       vm.showAL = true;
@@ -363,7 +367,7 @@ var vm = new Vue({
       vm.showFail = false;
       vm.showDelete = false;
       vm.showDeleteMovie = false; 
-      vm.showAL = false;     
+      vm.showAL = true;     
     },
     showFavList: function() {
       vm.showFav = true;
