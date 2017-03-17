@@ -57,7 +57,7 @@ Code Organization
 
 The way we organized the project was to have one page per language. On our index.html page, it contains all of our HTML code necessary. We contained all our custom JavaScript in one file (app.js), and all our custom CSS is in one file (main.css). We decided not to break the JS, CSS, and HTML into different files for each component because we wanted to maintain fast load times for our project and to minimize requests. The respective JavaScript and CSS files are contained within the JS and css folders.
 
-### Code: Optimization
+### Code: Optimization & Speed Analysis
 
 BEFORE: DOMContentLoad: 1.97s, Load: 2.30s, 24 HTTP requests
 
@@ -71,7 +71,7 @@ We started with the the following basic optimizations:
 
 * preferred CDN over firebase hosting (after individual testing, download speeds seems better - and allows for increased likelihood of cached files
 
-Then we continued to set up the application in a SPA shell wrapper to allow a service worker to locally cache files. This substantially increased the speed due to the application not needing to repeatedly request files outside of cached ones.
+Then we continued to set up the application in a SPA shell wrapper to allow a service worker to locally cache files. This substantially increased the speed due to the application not needing to repeatedly request files outside of cached ones. Using Google's Lighthouse, we also fixed many accessiblity issues while substantially increasing load speeds as well (see reports/lighthouse-unminified vs. reports/lighthouse-minfied).
 
 ### Code: Modification & Extension
 
