@@ -14,8 +14,18 @@ Libraries Used:
 
 Search
 
+Users are able to use the search bar to look-up actors and actresses. The search bar will attempt to autocomplete based on your search.
 ![Search bar](public/imgs/search.png)
 
+If the actor is not contained within the database, there will be a notification telling the user that the actor does not exist in the database. If they are logged in, it will prompt users to login and if they are logged in, it will prompt users to the add form.
+![Search result not signed-in](public/imgs/searchresultnot.png)
+![Search result](public/imgs/searchresult.png)
+
+Add/Edit Information
+
+Users are able to add a new actor using the following form. When the form is submitted, a new entry will be created in the database with the new actor. To edit an actor's information, the form looks the same as the add actor form, with the exception of the title. When the edit form is submitted, it will update the information for the corresponding actor's entry.
+
+![Add form](public/imgs/addform.png)
 
 ### Code: Architecture
 
