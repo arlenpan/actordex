@@ -4,7 +4,7 @@ Created by: Zi Pan, Christy Wong, Kelsey Ma
 
 https://actor-dex-final.firebaseapp.com/
 
-Libraries Used: 
+Libraries Used:
 [Bulma](http://bulma.io/) | [Vue.JS](https://vuejs.org/) | [VueFire](https://github.com/vuejs/vuefire)
 | [Firebase](https://firebase.google.com/) | [FirebaseUI](https://github.com/firebase/firebaseui-web)
 
@@ -16,13 +16,32 @@ Search
 
 ![Search bar](public/imgs/search.png)
 
+View Actor Information
+
+Users can view an actor or actress's information, which includes her gender, age, country of origin, biography and list of movies he or she has appeared in. From there, users can also add or remove that information (ie. adding or deleting a movie).
+
+![Actor information](/public/imgs/actor-info.png)
+
+Delete Actor
+
+From the actor profile pages, users can also delete the actor from the database.
+
+![Delete actor](/public/imgs/delete.png)
+
+Favorites
+
+From the actor profile pages, users can also favorite actors or actresses and view a list of that from the navbar.
+
+![Favorites](/public/imgs/favorites.png)
+
+
 
 ### Code: Architecture
 
 Technologies Used
   * Vue.js - Our group decided to use the framework Vue.js because it seemed like it was the best fit for what we needed. We decided to create a Single Page Application, and Vue.js is a framework that is specifically geared towards creating SPAs. Using a framework would make the development process faster and provide the dynamic loading of new information necessary.
   * Firebase - We used Firebase for the hosting, storage, and database. In order to store the data about our users and actors, we utilized the Firebase database. However, to store the images of the actors, we use Firebase storage because it is better equipped to upload and download images. The download URL of the image is saved as the value for the "image" key for the associated actor. We also used VueFire in order to bind Vue.js templates to our Firebase data (used for the information we stored for each actor).
-    * FirebaseUI - Our group used FirebaseUI for the user authentication portion of the project. We used FirebaseUI Auth in order to handle the authentication of users (correct logins and creation of new accounts) using email and Google-based login. 
+    * FirebaseUI - Our group used FirebaseUI for the user authentication portion of the project. We used FirebaseUI Auth in order to handle the authentication of users (correct logins and creation of new accounts) using email and Google-based login.
   * Bulma - We used the CSS framework Bulma in our project. We had originally created a basic project using Bootstrap, and liked the unified look and ease of development that a framework provided but wanted a CSS framework that had less overhead and did not require us to use jQuery. We were concerned with the amount of bloat that using Bootstrap would entail, which caused us to search for a lighter CSS framework. We settled on Bulma because it was a lightweight framework that provided a navigation bar as well (other frameworks we found did not include nav bars). Any other CSS that was required for our project was placed into a separate CSS file (main.css).
 
 Code Organization
@@ -31,7 +50,7 @@ The way we organized the project was to have one page per language. On our index
 
 ### Code: Modification & Extension
 
-For those new to the codebase, in order to begin working on the project and modifying the codebase, it would be important to understand how the code is structured. We would recomend people to first read about and understand how Vue.js components and instances work. We created Vue components associated with HTML templates for each feature, and to add a new feature to the project, people would have to create a new template then create a new Vue component, passing in the appropriate variables from the Vue instance if necessary. 
+For those new to the codebase, in order to begin working on the project and modifying the codebase, it would be important to understand how the code is structured. We would recomend people to first read about and understand how Vue.js components and instances work. We created Vue components associated with HTML templates for each feature, and to add a new feature to the project, people would have to create a new template then create a new Vue component, passing in the appropriate variables from the Vue instance if necessary.
 
 ### Thoughts: Concerns & Limitations
 
