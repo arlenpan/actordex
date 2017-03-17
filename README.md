@@ -10,11 +10,9 @@ Libraries Used:
 
 ## Documentation
 
-ActorDex is an application that lets users search for actors or actresses and allow them to view their information, such as biography and filmography. Users can also add actors to their own favorites list.
-
 ### Usage
 
-#### Search
+Search
 
 Users are able to use the search bar to look-up actors and actresses. The search bar will attempt to autocomplete based on your search.
 ![Search bar](public/imgs/search.png)
@@ -23,37 +21,57 @@ If the actor is not contained within the database, there will be a notification 
 ![Search result not signed-in](public/imgs/searchresultnot.png)
 ![Search result](public/imgs/searchresult.png)
 
-#### Add/Edit Information
+Add/Edit Information
 
 Users are able to add a new actor using the following form. When the form is submitted, a new entry will be created in the database with the new actor. To edit an actor's information, the form looks the same as the add actor form, with the exception of the title. When the edit form is submitted, it will update the information for the corresponding actor's entry.
+
 ![Add form](public/imgs/addform.png)
 
-#### View Actor Information
+View Actor Information
 
 Users can view an actor or actress's information, which includes her gender, age, country of origin, biography and list of movies he or she has appeared in. From there, users can also add or remove that information (ie. adding or deleting a movie).
+
 ![Actor information](/public/imgs/actor-info.png)
 
-#### Delete Actor
+Delete Actor
 
 From the actor profile pages, users can also delete the actor from the database.
+
 ![Delete actor](/public/imgs/delete.png)
 
-#### Favorites
+Favorites
 
 From the actor profile pages, users can also favorite actors or actresses and view a list of that from the navbar.
+
 ![Favorites](/public/imgs/favorites.png)
 
 ### Code: Architecture
 
-#### Technologies Used
+Technologies Used
   * Vue.js - Our group decided to use the framework Vue.js because it seemed like it was the best fit for what we needed. We decided to create a Single Page Application, and Vue.js is a framework that is specifically geared towards creating SPAs. Using a framework would make the development process faster and provide the dynamic loading of new information necessary.
   * Firebase - We used Firebase for the hosting, storage, and database. In order to store the data about our users and actors, we utilized the Firebase database. However, to store the images of the actors, we use Firebase storage because it is better equipped to upload and download images. The download URL of the image is saved as the value for the "image" key for the associated actor. We also used VueFire in order to bind Vue.js templates to our Firebase data (used for the information we stored for each actor).
     * FirebaseUI - Our group used FirebaseUI for the user authentication portion of the project. We used FirebaseUI Auth in order to handle the authentication of users (correct logins and creation of new accounts) using email and Google-based login.
   * Bulma - We used the CSS framework Bulma in our project. We had originally created a basic project using Bootstrap, and liked the unified look and ease of development that a framework provided but wanted a CSS framework that had less overhead and did not require us to use jQuery. We were concerned with the amount of bloat that using Bootstrap would entail, which caused us to search for a lighter CSS framework. We settled on Bulma because it was a lightweight framework that provided a navigation bar as well (other frameworks we found did not include nav bars). Any other CSS that was required for our project was placed into a separate CSS file (main.css).
 
-#### Code Organization
+Code Organization
 
 The way we organized the project was to have one page per language. On our index.html page, it contains all of our HTML code necessary. We contained all our custom JavaScript in one file (app.js), and all our custom CSS is in one file (main.css). We decided not to break the JS, CSS, and HTML into different files for each component because we wanted to maintain fast load times for our project and to minimize requests. The respective JavaScript and CSS files are contained within the JS and css folders.
+
+### Code: Optimization
+
+BEFORE: DOMContentLoad: 1.97s, Load: 2.30s, 24 HTTP requests
+
+AFTER: DOMContentLoad: 1.33s, Load: 1.48s, 21 HTTP requests
+
+We started with the the following basic optimizations:
+
+* reduced HTTP requests combining files
+
+* reduced filesize with minifying css and JS
+
+* preferred CDN over firebase hosting (after individual testing, download speeds seems better - and allows for increased likelihood of cached files
+
+Then we continued to set up the application in a SPA shell wrapper to allow a service worker to locally cache files. This substantially increased the speed due to the application not needing to repeatedly request files outside of cached ones.
 
 ### Code: Modification & Extension
 
