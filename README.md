@@ -12,6 +12,9 @@ Libraries Used:
 
 ### Usage
 
+Search
+
+![Search bar](http://public/imgs/search.png)
 
 
 ### Code: Architecture
@@ -23,6 +26,7 @@ Technologies Used
   * Bulma - We used the CSS framework Bulma in our project. We had originally created a basic project using Bootstrap, and liked the unified look and ease of development that a framework provided but wanted a CSS framework that had less overhead and did not require us to use jQuery. We were concerned with the amount of bloat that using Bootstrap would entail, which caused us to search for a lighter CSS framework. We settled on Bulma because it was a lightweight framework that provided a navigation bar as well (other frameworks we found did not include nav bars). Any other CSS that was required for our project was placed into a separate CSS file (main.css).
 
 Code Organization
+
 The way we organized the project was to have one page per language. On our index.html page, it contains all of our HTML code necessary. We contained all our custom JavaScript in one file (app.js), and all our custom CSS is in one file (main.css). We decided not to break the JS, CSS, and HTML into different files for each component because we wanted to maintain fast load times for our project and to minimize requests. The respective JavaScript and CSS files are contained within the JS and css folders.
 
 ### Code: Modification & Extension
