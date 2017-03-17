@@ -115,12 +115,37 @@
   <template id="favorite-list-temp">
     <div class="box">
       <h1 class="title">Your Favorite Actors</h1>
-      <ul>
+      <!-- <ul>
         <li v-for="favorite in favorites">
           <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
         </li>
-      </ul>
+      </ul> -->
+      <div id="favorite-list" class="container">
+        <div v-for="favorite in favorites" class="card">
+          <div class="card-image">
+            <figure class="image is-128x128">
+              <img v-on:click="showActorInfo(favorite['.key'])" :src="favorite['.key'].image" :alt="favorite['.key']">
+            </figure>
+          </div>
+          <div class="card-content">
+            <a v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- <h1 class="title">Your Favorite Actors</h1>
+    <div id="favorites-list" class="container">
+      <div v-for="favorite in favorites" class="card">
+        <div class="card-image">
+          <figure class="image is-128x128">
+            <img v-on:click="showActorInfo(favorite['.key'])" :src="favorite(['.key'].image" :alt="favorite['.key']">
+          </figure>
+        </div>
+        <div class="card-content">
+          <a v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
+        </div>
+      </div>
+    </div> -->
   </template>
 
   <template id="actor-list-temp">
@@ -144,6 +169,7 @@
         <div class="card-content">
           <a v-on:click="addForm">Add Actor</a>
         </div>
+      </div>
     </div>
   </template>
 
