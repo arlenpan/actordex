@@ -366,6 +366,7 @@ var vm = new Vue({
       vm.showFav = false;
       vm.submitAdd = false;
       vm.showAdd = false;
+      vm.showEdit = false;
     },
     home: function() {
       vm.submitAdd = false;
@@ -381,6 +382,7 @@ var vm = new Vue({
       vm.showFav = true;
       vm.showAdd = false;
       vm.showAL = false;
+      vm.showEdit = false;
     },
     showActorInfo: function(actor) {
       database.ref('actors/' + actor).once('value').then(function(snapshot) {
