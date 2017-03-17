@@ -52,6 +52,9 @@ img {
 #actor-list img {
   cursor: pointer;
 }
+#actor-list a {
+  color: #008571;
+}
 
 /* ACTOR INFO */
 #movie-item {

@@ -309,11 +309,6 @@ var deleteActor = Vue.component('delete-actor', {
   }
 });
 
-// Vue Component: ACTOR NOT FOUND
-// var actorNotFound = Vue.component('actor-not-found', {
-//   template: '#actor-not-found-temp'
-// });
-
 // Vue Instance: BODY WRAPPER & USER BASED FUNCTIONS
 var vm = new Vue({
   el: '#vm',
@@ -389,10 +384,12 @@ var vm = new Vue({
           vm.currActorMovies = snapshot.val().movies;
         }
         vm.currKey = snapshot.key;
-        var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
-        ref.once('value').then(function(snapshot) {
-          vm.currFavorite = snapshot.val();
-        })
+        if (firebase.auth().currentUser) {
+          var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(vm.currActorName);
+          ref.once('value').then(function(snapshot) {
+            vm.currFavorite = snapshot.val();
+          })
+        }
       });
       vm.submitAdd = true;
       vm.showEdit = false;

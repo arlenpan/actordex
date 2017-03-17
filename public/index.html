@@ -5,6 +5,7 @@
     <title>ActorDex</title>
     <meta name="author" content="Christy Wong, Arlen Pan, Kelsey Ma">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00d1b2">
     
     <link rel=manifest href="manifest.json">
     <link type="text/css" rel="stylesheet" href="css/bulma.css" />
@@ -12,9 +13,9 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
 
     <!-- DEV VERSION -->
-    <script src="https://unpkg.com/vue"></script>
+    <!-- <script src="https://unpkg.com/vue"></script> -->
     <!-- PROD VERSION -->
-    <!-- <script src="js/vue.min.js"></script> -->
+    <script src="js/vue.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
     <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
@@ -87,8 +88,8 @@
 
   <template id="search-bar-temp">
     <div>
-      <form class="control has-addons" id="search-form" v-on:submit.prevent="viewActor">  
-        <input class="input is-expanded" type="text" list="actor-dropdown" v-model="selection" class="search-input" name="search-actor-movie">
+      <form class="control has-addons" id="search-form" v-on:submit.prevent="viewActor">
+        <input class="input is-expanded" type="text" list="actor-dropdown" v-model="selection" name="search-actor-movie" aria-label="searchbar">
         <datalist id="actor-dropdown">
           <template v-for="actor in actors">
              <option>{{actor.name}}</option>
@@ -116,37 +117,12 @@
   <template id="favorite-list-temp">
     <div class="box">
       <h1 class="title">Your Favorite Actors</h1>
-      <!-- <ul>
+      <ul>
         <li v-for="favorite in favorites">
           <a href="#" v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
         </li>
-      </ul> -->
-      <div id="favorite-list" class="container">
-        <div v-for="favorite in favorites" class="card">
-          <div class="card-image">
-            <figure class="image is-128x128">
-              <img v-on:click="showActorInfo(favorite['.key'])" :src="favorite['.key'].image" :alt="favorite['.key']">
-            </figure>
-          </div>
-          <div class="card-content">
-            <a v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
-          </div>
-        </div>
-      </div>
+      </ul>
     </div>
-    <!-- <h1 class="title">Your Favorite Actors</h1>
-    <div id="favorites-list" class="container">
-      <div v-for="favorite in favorites" class="card">
-        <div class="card-image">
-          <figure class="image is-128x128">
-            <img v-on:click="showActorInfo(favorite['.key'])" :src="favorite(['.key'].image" :alt="favorite['.key']">
-          </figure>
-        </div>
-        <div class="card-content">
-          <a v-on:click="showActorInfo(favorite['.key'])">{{favorite['.key']}}</a>
-        </div>
-      </div>
-    </div> -->
   </template>
 
   <template id="actor-list-temp">
@@ -214,17 +190,13 @@
   </template>
 
   <template id="movie-item-temp">
-    <!-- <li><input type="checkbox"> {{title}} <button v-on:click="$emit('remove')">X</button></li> -->
-    <!-- <li> -->
       <div class="block" id="movie-item">
         <span class="tag is-primary is-medium">
           {{title}}
-          <!-- <button class="delete is-small" v-on:click="$emit('remove')"></button> -->
           <button class="delete is-small" @click="showDeleteMovie = true" v-if="signedIn"></button>
           <delete-movie v-if="showDeleteMovie" v-on:remove="$emit('remove')" @close="showDeleteMovie = false"></delete-movie>
         </span>
       </div>
-    <!-- </li> -->
   </template>
 
   <template id="delete-movie-temp">
