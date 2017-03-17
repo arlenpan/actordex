@@ -14,7 +14,7 @@ Libraries Used:
 
 Search
 
-![Search bar](http://public/imgs/search.png)
+![Search bar](public/imgs/search.png)
 
 
 ### Code: Architecture
