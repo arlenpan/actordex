@@ -113,6 +113,7 @@ var searchFail = Vue.component('search-fail', {
     addForm: function() {
       vm.showAdd = true;
       vm.showFail = false;
+      vm.showAL = false;
     }
   }
 });
@@ -344,7 +345,7 @@ var vm = new Vue({
     showFav: false,
     showAdd: false,
     showFail: false,
-    showAL: false
+    showAL: true
   },
   methods: {
     signOut: function() {
@@ -352,12 +353,12 @@ var vm = new Vue({
         console.log("Signed out!");
       });
       this.home(); 
-      vm.showAL = false; 
     },
     viewAL: function() {
       vm.showAL = true;
       vm.showFav = false;
       vm.submitAdd = false;
+      vm.showAdd = false;
     },
     home: function() {
       vm.submitAdd = false;
