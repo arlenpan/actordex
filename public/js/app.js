@@ -32,13 +32,13 @@ window.addEventListener('load', function() {
 function writeUserData(userId, name, email, imageUrl) {
   var ref = database.ref('users/' + userId);
   ref.once('value').then(function(snapshot) {
-    if (snapshot.val() === null) {   
+    if (snapshot.val() === null) {
       ref.set({
         username: name,
         email: email,
         image: imageUrl
       });
-    } 
+    }
   });
 };
 
@@ -74,7 +74,7 @@ var actorList = Vue.component('actor-list', {
   }
 });
 
-// Vue Component: SEARCH BAR 
+// Vue Component: SEARCH BAR
 var searchBar = Vue.component('search-bar', {
   template: '#search-bar-temp',
   data: function() {
@@ -180,9 +180,6 @@ var actorInfo = Vue.component('actor-info', {
     showEditForm: function() {
       vm.showEdit = true;
     },
-    showDeleteDialog: function() {
-      vm.showDelete = true;
-    },
     addFavorite: function() {
       var ref = database.ref('users/' + firebase.auth().currentUser.uid).child('favorites').child(this.name);
       ref.once('value').then(function(snapshot) {
@@ -286,7 +283,6 @@ var editActor = Vue.component('edit-form', {
 // Vue Component: DELETE ACTOR
 var deleteActor = Vue.component('delete-actor', {
   template: '#delete-actor-temp',
-  props: ['toggleDeleteDialog'],
   methods: {
     deleteActor: function() {
       database.ref('actors/' + vm.currKey).remove();
@@ -302,9 +298,6 @@ var deleteActor = Vue.component('delete-actor', {
       vm.currActorCountry = '';
       vm.currActorMovies = [];
       vm.currKey = '';
-    },
-    hideDeleteDialog: function() {
-      vm.showDelete = false;
     }
   }
 });
@@ -347,7 +340,7 @@ var vm = new Vue({
       firebase.auth().signOut().then(function() {
         console.log("Signed out!");
       });
-      this.home(); 
+      this.home();
     },
     viewAL: function() {
       vm.showAL = true;
@@ -362,8 +355,8 @@ var vm = new Vue({
       vm.showAdd = false;
       vm.showFail = false;
       vm.showDelete = false;
-      vm.showDeleteMovie = false; 
-      vm.showAL = true;     
+      vm.showDeleteMovie = false;
+      vm.showAL = true;
     },
     showFavList: function() {
       vm.showFav = true;
